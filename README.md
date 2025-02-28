@@ -1,4 +1,3 @@
-# AgriPredict
 # 🌾 Crop Recommendation System (ML)
 
 A **Machine Learning-based Crop Recommendation System** that predicts the best crop to grow based on soil parameters like **Nitrogen, Phosphorus, Potassium, pH, Rainfall, and Temperature**.
@@ -28,13 +27,19 @@ A **Machine Learning-based Crop Recommendation System** that predicts the best c
 
 ## ⚡ Installation & Setup
 
-### 1️⃣ Install Dependencies
+### 1️⃣ Clone the Repository
+```bash
+git clone https://github.com/MR-0312/AgriPredict.git
+cd AgriPredict
+```
+
+### 2️⃣ Install Dependencies
 First, install the required Python packages:
 ```bash
 pip install -r requirements.txt
 ```
 
-### 2️⃣ Train the Model (If not already trained)
+### 3️⃣ Train the Model (If not already trained)
 Run the script to train the Random Forest model on the dataset:
 ```bash
 python train_ml_model.py
@@ -74,12 +79,6 @@ streamlit run app_ml.py
 - 🔹 Improve hyperparameter tuning for higher accuracy
 - 🔹 Add more soil parameters for better predictions
 - 🔹 Deploy the model using Flask or FastAPI
-
----
-
-## 💡 Author & Credits
-Developed by **[Your Name]**  
-Inspired by **Agriculture + AI** solutions 🚀
 
 ---
 
