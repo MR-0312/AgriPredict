@@ -1,19 +1,32 @@
 import joblib
 import numpy as np
+import pandas as pd
+from sklearn.metrics import accuracy_score
 
 # Load trained model & preprocessors
 model = joblib.load("final_rf_crop_model.pkl")
 label_encoder = joblib.load("label_encoder.pkl")
 scaler = joblib.load("scaler.pkl")
 
-# Test Sample (Modify these values for testing)
-test_sample = np.array([[50, 60, 40, 6.5, 500, 25]])  # N, P, K, pH, Rainfall, Temperature
+# Load test dataset
+test_df = pd.read_csv("Test Dataset.csv").drop(columns=["Unnamed: 0"])
 
-# Scale input
-test_sample = scaler.transform(test_sample)
+# Extract features and target
+feature_columns = ["N", "P", "K", "pH", "rainfall", "temperature"]
+X_test = test_df[feature_columns]
+y_test = label_encoder.transform(test_df["Crop"])  # Encode target
 
-# Predict crop
-predicted_class = model.predict(test_sample)[0]
-predicted_crop = label_encoder.inverse_transform([predicted_class])[0]
+# Scale test data (convert back to DataFrame to keep feature names)
+X_test_scaled = pd.DataFrame(scaler.transform(X_test), columns=feature_columns)
 
-print(f"Predicted Crop: {predicted_crop}")
+# Predict on test data
+y_pred = model.predict(X_test_scaled)
+
+# Calculate accuracy
+accuracy = accuracy_score(y_test, y_pred)
+print(f"✅ Final Test Accuracy: {accuracy:.4f}")
+
+# Show sample predictions
+test_df["Predicted Crop"] = label_encoder.inverse_transform(y_pred)
+print("\n🔹 Sample Predictions:")
+print(test_df[["N", "P", "K", "pH", "rainfall", "temperature", "Predicted Crop"]].head(10))
